@@ -80,7 +80,9 @@ a <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master
   mutate(fecha = as_date(fecha))
 
 
-
+# Función para normalizar datos (variables)
+# se utiliza para mejorar el ajuste de colores
+# a los valores de una variable en particular
 min_max <- function(x) {
   rng <- range(x, na.rm = TRUE)
   (x - rng[1]) / (rng[2] - rng[1])
@@ -88,7 +90,7 @@ min_max <- function(x) {
 
 
 
-
+# Se clasifican los valores de una variable ya normalizada
 ni <- round(
   classIntervals(var = a$casos_nuevos_d,
                  n = 7,
