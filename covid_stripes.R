@@ -44,7 +44,7 @@ read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/outp
                date_labels = "%b",
                expand = c(0.05, 0.1)) +
   scale_y_continuous(labels = scales::label_number(big.mark = ".")) +
-  labs(y = "Tasa incidencia COVID \n",
+  labs(y = "Casos nuevos COVID + \n",
        x = NULL) +
   theme_minimal() +
   theme(panel.grid.major.x = element_blank(),
@@ -119,7 +119,7 @@ ggplot(a, aes(x = fecha,
   geom_text(aes(x = min(fecha),
                 y = 0.47),
             label = "2020") +
-  scale_fill_gradientn(name = "Tasa incidencia COVID",
+  scale_fill_gradientn(name = "Casos nuevos COVID + \n",
                        colours = viridis::inferno(n = 100),
                        # breaks = "",
                        values = min_max(ni),
