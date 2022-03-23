@@ -70,7 +70,6 @@ ggsave(filename = here::here("plots", "covid_spline.png"),
 
 # COVID STRIPES FINAL -----------------------------------------------------
 
-
 a <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto5/TotalesNacionales.csv") %>% 
   filter(Fecha == "Casos nuevos totales") %>% 
   pivot_longer(cols = `2020-03-02`:ncol(.),
@@ -100,7 +99,7 @@ ni <- round(
 
 
 
-
+# casos nuevos diarios
 ggplot(a, aes(x = fecha,
               y = "y")) +
   geom_tile(aes(fill = (casos_nuevos_d))) +
@@ -164,25 +163,28 @@ ggsave(filename = here::here("plots", "covid_stripes.png"),
        width = 10
        )
 
+# casos nuevos media móvil 7 días
+# centered rolling mean
 
 
 # WIP ---------------------------------------------------------------------
 
 
-p <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto5/TotalesNacionales.csv") %>% 
+read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto5/TotalesNacionales.csv") %>% 
   filter(Fecha == "Casos nuevos totales") %>% 
   pivot_longer(cols = `2020-03-02`:ncol(.),
                names_to = "fecha",
                values_to = "casos_nuevos_d") %>% 
   rename(tipo = Fecha) %>% 
-  mutate(fecha = as_date(fecha)) %>% 
+  mutate(fecha = as_date(fecha),
+         moving_mean_7d = zoo::rollmean(casos_nuevos_d, k = 7, fill = NA)) %>% 
   ggplot(aes(x = fecha,
-             y = casos_nuevos_d)) +
-  geom_point(colour = "#3A5FCD",
-             alpha = 0.8) +
+             y = moving_mean_7d)) +
+  # geom_point(colour = "#3A5FCD",
+  #            alpha = 0.8) +
   geom_spline(size = 1.5,
               spar = 0,
-              colour = "#CD2990") +
+              colour = "#3A5FCD") +
   geom_vline(aes(xintercept = as_date(c("2021-01-01"))),
              colour = "#CD2990",
              size = 0.5) +
@@ -205,7 +207,7 @@ p <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master
                date_labels = "%b",
                expand = c(0.05, 0.1)) +
   scale_y_continuous(labels = scales::label_number(big.mark = ".")) +
-  labs(y = "Tasa incidencia COVID \n",
+  labs(y = "Casos nuevos COVID + \n",
        x = NULL) +
   theme_minimal() +
   theme(panel.grid.major.x = element_blank(),
@@ -215,13 +217,8 @@ p <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master
   )
 
 
-p +
-  transition_reveal(fecha) +
-  labs(title = "mes: {frame_time}")
 
-
-
-ggsave(filename = "covid_spline2.png",
+ggsave(filename = "moving_average_7d.png",
        type = "cairo",
        scale = 1.3,
        bg = "white",
