@@ -218,7 +218,7 @@ read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/outp
 
 
 
-ggsave(filename = "moving_average_7d.png",
+ggsave(filename = here::here("plots", "moving_average_7d.png"),
        type = "cairo",
        scale = 1.3,
        bg = "white",
