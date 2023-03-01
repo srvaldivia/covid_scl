@@ -1,6 +1,6 @@
 # covid_scl
 
-COVID's situation in Chile. **Last update: 11-01-2023**
+COVID's situation in Chile. **Last update: 01-03-2023**
 
 ## COVID stripes
 
