@@ -1,6 +1,6 @@
 # covid_scl
 
-COVID's situation in Chile. **Last update: 01-03-2023**
+COVID's situation in Chile. **Last update: 21-01-2025**
 
 ## COVID stripes
 
@@ -15,3 +15,4 @@ This is an adaptation of the well known [Warming Stripes](https://en.wikipedia.o
 ## 7 days Moving Average
 
 ![](plots/moving_average_7d.png)
+A line I wrote on my local computer  
